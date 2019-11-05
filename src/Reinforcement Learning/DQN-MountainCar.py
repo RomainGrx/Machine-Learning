@@ -16,7 +16,7 @@ from collections import deque
 import random
 import sys
 import math
-sys.path.insert(0, '/Users/romaingraux/Documents/Python/Machine-Learning/res/prog')
+sys.path.insert(0, '../../res/prog')
 import useful as u
 modelpath = "../../res/models/DQN-MountainCar.h5"
 
@@ -26,7 +26,7 @@ class network():
         self.state_size = env.observation_space.shape[0]
         self.action_size = env.action_space.n
         self.memory = deque(maxlen=2000)
-        self.gamma = gamma 
+        self.gamma = gamma
         self.epsilon = epsilon
         self.epsilon_decay = epsilon_decay
         self.min_epsilon = 0.01
@@ -55,7 +55,7 @@ class network():
         if np.random.random() <= self.epsilon:
             return int(random.randrange(self.action_size))
         return np.argmax(self.model.predict(state))
-    
+
     def eps_adjust(self):
         self.epsilon = max(self.min_epsilon, 1 - self.current_episode / self.episodes)
 #        self.epsilon = - 0.0016 * self.current_episode + 0.4
@@ -74,7 +74,7 @@ class network():
         self.model.fit(np.array(x_batch), np.array(y_batch), batch_size=len(x_batch), verbose=0)
         self.eps_adjust()
         self.targetmodel.set_weights(self.model.get_weights())
-        
+
     def replay(self):
         batch_size = self.batch_size
         x_batch, y_batch = [], []
@@ -139,20 +139,12 @@ class network():
 env = gym.make("MountainCar-v0")
 network = network(env, episodes = 10, epsilon = 1.0, epsilon_decay = 0.9995)
 
+#----------------------------------------------------------------
+
 # Train the model
 # network.run(show = True)
 
 # Play with the model trained
-network.play(episodes = 1)
+network.play(episodes = 10)
 
-
-
-
-
-
-
-
-
-
-
-
+#----------------------------------------------------------------

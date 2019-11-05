@@ -1,17 +1,17 @@
 # -*- coding: utf-8 -*-
-import gym 
-import tensorflow as tf  
+import gym
+import tensorflow as tf
 from collections import deque
 import numpy as np
 from tensorflow import keras
 import matplotlib.pyplot as plt
 import sys
-sys.path.insert(0, '/Users/romaingraux/Documents/Python/Machine-Learning/res/prog')
+sys.path.insert(0, '../../res/prog')
 import useful as u
 
 
-tensorboard_path = '/Users/romaingraux/Documents/Python/Machine-Learning/res/tensorboard/fashion/run2/'
-categories = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat', 
+tensorboard_path = '../../res/tensorboard/fashion/run2/'
+categories = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
                'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
 fashion_mnist = keras.datasets.fashion_mnist
@@ -41,7 +41,7 @@ def Fully_connected(input, neurons_in, neurons_out, name = 'fully', activation =
             act = tf.nn.relu(mul)
         elif activation == 'softmax' :
             act = tf.nn.softmax(mul)
-        else : 
+        else :
             act = mul
         tf.summary.histogram('weights', w)
         tf.summary.histogram('biases', b)
@@ -80,7 +80,7 @@ with tf.name_scope('loss'):
     tf.summary.scalar('loss', loss)
 with tf.name_scope('optimizer'):
     Adam = tf.train.AdamOptimizer(1e-4).minimize(loss)
-    
+
 with tf.name_scope('accuracy'):
     correct = tf.equal(tf.arg_max(logits, 1), tf.arg_max(y, 1))
     accuracy = tf.reduce_mean(tf.cast(correct, tf.float32))
@@ -102,14 +102,12 @@ for i in range(2000):
                                 replace = False)
     batch_images = [train_images[i] for i in index]
     batch_labels = [train_labels[i] for i in index]
-    
+
     sess.run(Adam, feed_dict={x : batch_images,
                                   y : batch_labels})
     if i % 5 == 0:
         [acc, s, lo] = sess.run([accuracy, merged_summary, loss], feed_dict={x : batch_images,
                                                                     y : batch_labels})
         writer.add_summary(s, i)
-    
+
         print('Episode {} Accuracy {} Loss {}'.format(i, acc, lo))
-
-

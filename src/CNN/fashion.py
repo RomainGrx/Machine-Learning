@@ -1,7 +1,7 @@
 #
 # Predict pictures in a ten categories array
 #
-# Romain Graux 
+# Romain Graux
 # May 24, 2019
 #
 # -------------------------------------------------------------------------
@@ -11,29 +11,29 @@ from tensorflow import keras
 import matplotlib.pyplot as plt
 import numpy as np
 import sys
-sys.path.insert(0, '/Users/romaingraux/Documents/Python/Machine-Learning/res/prog')
+sys.path.insert(0, '../../res/prog')
 import useful as u
 
-modelpath = "/Users/romaingraux/Documents/Python/Machine-Learning/res/models/fashion.h5"
+modelpath = "../../res/models/fashion.h5"
 fashion_mnist = keras.datasets.fashion_mnist
 (train_images, train_labels), (test_images, test_labels) = fashion_mnist.load_data()
 
-categories = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat', 
+categories = ['T-shirt/top', 'Trouser', 'Pullover', 'Dress', 'Coat',
                'Sandal', 'Shirt', 'Sneaker', 'Bag', 'Ankle boot']
 
 train_images, test_images = train_images.reshape(train_images.shape[0], 28, 28, 1)/255, test_images.reshape(test_images.shape[0], 28, 28, 1)/255
 
 # In[1]
 model = keras.Sequential([
-    keras.layers.Conv2D(32, input_shape = (28, 28, 1), kernel_size=(3, 3), activation = 'relu', padding='same'), 
-    keras.layers.MaxPooling2D(pool_size = (2,2)),      
+    keras.layers.Conv2D(32, input_shape = (28, 28, 1), kernel_size=(3, 3), activation = 'relu', padding='same'),
+    keras.layers.MaxPooling2D(pool_size = (2,2)),
     keras.layers.Flatten(),
     keras.layers.Dense(128, activation=tf.nn.relu),
     keras.layers.Dense(64, activation=tf.nn.relu),
     keras.layers.Dense(10, activation=tf.nn.softmax)
 ])
 
-model.compile(optimizer='adam', 
+model.compile(optimizer='adam',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 

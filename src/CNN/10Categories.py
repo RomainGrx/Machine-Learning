@@ -2,17 +2,17 @@
 #
 # Predict pictures of transport vehicles
 #
-# Romain Graux 
+# Romain Graux
 # May 24, 2019
 #
 # -------------------------------------------------------------------------
 # In[1]
 # Initialisation générale
 
-data = "/Users/romaingraux/Documents/Python/Machine-Learning/res/datasets/transport-datasets/data_batch_1"
-test_data = "/Users/romaingraux/Documents/Python/Machine-Learning/res/datasets/transport-datasets/test_batch"
-metafile = "/Users/romaingraux/Documents/Python/Machine-Learning/res/datasets/transport-datasets/batches.meta"
-modelpath = "/Users/romaingraux/Documents/Python/Machine-Learning/res/models/transport.h5"
+data = "../../res/datasets/transport-datasets/data_batch_1"
+test_data = "../../res/datasets/transport-datasets/test_batch"
+metafile = "../../res/datasets/transport-datasets/batches.meta"
+modelpath = "../../res/models/transport.h5"
 input_shape = (32, 32, 3)
 import _pickle as cPickle
 import matplotlib.pyplot as plt
@@ -21,7 +21,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 
-def unpickle(file):    
+def unpickle(file):
     with open(file, 'rb') as fo:
         dict = cPickle.load(fo)
     return dict
@@ -52,12 +52,12 @@ model = keras.Sequential([
 #    keras.layers.MaxPooling2D(pool_size = (2,2)),
     keras.layers.Flatten(),
     keras.layers.Dense(256, activation=tf.nn.relu),
-    keras.layers.Dense(128, activation=tf.nn.relu),    
+    keras.layers.Dense(128, activation=tf.nn.relu),
     keras.layers.Dense(64, activation=tf.nn.relu),
     keras.layers.Dense(categories_size, activation=tf.nn.softmax)
 ])
 
-model.compile(optimizer='rmsprop', 
+model.compile(optimizer='rmsprop',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
@@ -80,7 +80,7 @@ if(txt1 == "yes"):
 
 # In[4]
 # Prédictions des photos
-    
+
 model = keras.models.load_model(modelpath)
 predictions = model.predict(photos)
 category_predictions = np.argmax(predictions, axis = 1)
@@ -99,4 +99,3 @@ for n in range(10):
                                 categories[labels[shift+n]]))
 
 # In[6]
-    

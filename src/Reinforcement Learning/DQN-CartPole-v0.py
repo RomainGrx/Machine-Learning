@@ -16,7 +16,7 @@ from collections import deque
 import random
 import sys
 import math
-sys.path.insert(0, '/Users/romaingraux/Documents/Python/Machine-Learning/res/prog')
+sys.path.insert(0, '../../res/prog')
 import useful as u
 modelpath = "../../res/models/DQN-CartPole.h5"
 
@@ -27,7 +27,7 @@ class network():
         self.action_size = env.action_space.n
         self.model = self.build()
         self.memory = deque(maxlen=2000)
-        self.gamma = gamma 
+        self.gamma = gamma
         self.epsilon = epsilon
         self.min_epsilon = 0.01
         self.learning_rate = 0.001
@@ -52,7 +52,7 @@ class network():
         if np.random.random() <= self.epsilon:
             return int(random.randrange(self.action_size))
         return np.argmax(self.model.predict(state))
-    
+
     def eps_adjust(self):
         self.epsilon = max(self.min_epsilon, self.epsilon * 0.995)
 #        self.epsilon = max(self.min_epsilon, min(1, - 0.7 * math.log10((self.current_episode + 1) / self.episodes)))
@@ -119,19 +119,12 @@ class network():
 env = gym.make("CartPole-v0")
 network = network(env, episodes = 150, epsilon = 0.995)
 
+#----------------------------------------------------------------
+
 # Train the model
-network.run(show = True)
+# network.run(show = True)
 
 # Play with the model trained
-# network.play(episodes = 1)
+network.play(episodes = 10)
 
-
-
-
-
-
-
-
-
-
-
+#----------------------------------------------------------------

@@ -14,7 +14,7 @@ import numpy as np
 import tensorflow as tf
 from tensorflow import keras
 import sys
-sys.path.insert(0, '/Users/romaingraux/Documents/Python/Machine-Learning/res/prog')
+sys.path.insert(0, '../../res/prog')
 import useful as u
 
 data = keras.datasets.cifar10
@@ -23,7 +23,7 @@ img_cols, img_rows, channels = 32, 32, 3
 train_images, test_images = train_images.reshape(train_images.shape[0], img_cols, img_rows, channels)/255, test_images.reshape(test_images.shape[0], img_cols, img_rows, channels)/255
 input_shape = (img_cols, img_rows, channels)
 
-modelpath = "/Users/romaingraux/Documents/Python/Machine-Learning/res/models/cifar10.h5"
+modelpath = "../../res/models/cifar10.h5"
 categories = np.array(['Airplane','Automobile','Bird','Cat','Deer','Dog','Frog','Horse','Ship','Truck'])
 
 # In[1]
@@ -50,7 +50,7 @@ model = keras.Sequential([
         keras.layers.Dense(10, activation=tf.nn.sigmoid)
         ])
 
-model.compile(optimizer='rmsprop', 
+model.compile(optimizer='rmsprop',
               loss='sparse_categorical_crossentropy',
               metrics=['accuracy'])
 
@@ -75,20 +75,6 @@ for n in range(10):
                                 100*category_accuracies[shift+n],
                                 'REAL : ',
                                 categories[test_labels[shift+n][0]]))
-        
+
 # In[3]
 # Practice
-        
-
-
-
-
-
-
-
-
-
-
-
-
-
